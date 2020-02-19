@@ -1,3 +1,6 @@
+import random
+
+
 def init_board():
 
     board = [
@@ -60,28 +63,20 @@ def has_won(board, player):
 
     if player == board[0][0] and player == board[0][1] and player == board[0][2]:
         return True
-        return (f'{player} WON!')
     elif player == board[1][0] and player == board[1][1] and player == board[1][2]:
         return True
-        print(f'{player} WON!')
     elif player == board[2][0] and player == board[2][1] and player == board[2][2]:
         return True
-        print(f'{player} WON!')
     elif player == board[0][0] and player == board[1][0] and player == board[2][0]:
         return True
-        print(f'{player} WON!')
     elif player == board[0][1] and player == board[1][1] and player == board[2][1]:
         return True
-        print(f'{player} WON!')
     elif player == board[0][2] and player == board[1][2] and player == board[2][2]:
         return True
-        print(f'{player} WON!')
     elif player == board[0][1] and player == board[1][1] and player == board[2][2]:
         return True
-        print(f'{player} WON!')
     elif player == board[0][2] and player == board[1][1] and player == board[2][0]:
         return True
-        print(f'{player} WON!')
     else:
         return False
 
@@ -106,7 +101,7 @@ def print_board(board):
           board[2][1] + ' | ' + board[2][2])
     print('      |   |')
     print()
-    return ' ' + board[0][0] + ' | ' + board[0][1] + ' | ' + board[0][2]
+    # return ' ' + board[0][0] + ' | ' + board[0][1] + ' | ' + board[0][2]
 
 
 def is_full(board):
@@ -116,14 +111,67 @@ def is_full(board):
 
 
 def get_ai_move(board, player):
+    mission_accomplished = False
+    for index, item in enumerate(board):
+        print(item[index])
+        if mission_accomplished:
+            break
+        for index1, item1 in enumerate(item):
+            if item1 == ' ':
+                board[index][index1] = player
+                mission_accomplished = True
+                break
+    return board
 
 
-def main():
+def human_vs_ai():
 
     game_board = init_board()
 
     print_board(game_board)
     the_player = input('Enter X or O: ').upper()
+
+    while the_player != '0' and the_player != 'X':
+        the_player = input('Enter X or O: ').upper()
+
+    if the_player == 'QUIT':
+        quit()
+
+    ai_is_moving = False
+
+    while not has_won(game_board, the_player):
+        # row = int(input('Row: '))
+        # col = int(input('Col: '))
+        if not ai_is_moving:
+            position = input('Enter position: ').upper()
+            move = get_move(position, game_board)
+
+            game_board = mark(game_board, the_player, move[0], move[1])
+        else:
+            game_board = get_ai_move(game_board, the_player)
+        print_board(game_board)
+        is_full(game_board)
+        if has_won(game_board, the_player):
+            print(f'{the_player} WON!')
+            break
+
+        if the_player == 'X':
+            print('Next enter 0')
+            the_player = '0'
+        else:
+            print('Next enter X')
+            the_player = 'X'
+        ai_is_moving = not ai_is_moving
+
+
+def main():
+    random = [0, 1, 2, ]
+
+    game_board = init_board()
+
+    print_board(game_board)
+    the_player = input('Enter X or O: ').upper()
+
     while the_player != '0' and the_player != 'X':
         the_player = input('Enter X or O: ').upper()
 
@@ -150,4 +198,5 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    # main()
+    human_vs_ai()

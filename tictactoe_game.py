@@ -102,7 +102,10 @@ def print_board(board):
           board[2][1] + ' | ' + board[2][2])
     print('      |   |')
     print()
-    # return ' ' + board[0][0] + ' | ' + board[0][1] + ' | ' + board[0][2]
+
+
+def print_result(player):
+    print(f'{player} WON!')
 
 
 def is_full(board):
@@ -125,31 +128,34 @@ def stupid_ai(board, player):
     return board
 
 
-def random_ai(board, player, m):
-    # list = [(0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)]
-    # position = random.choice(list)
-    row = random.randint(0, 2)
-    col = random.randint(0, 2)
-    if board[row][col] == ' ' and board[row][col] != '0':
-        board[row][col] = player
+def random_ai(board, player):
+
     # elif board[row][col] != ' ':
-    #     row = random.randint(0, 2)
-    #     col = random.randint(0, 2)
+    # row = random.randint(0, 2)
+    # col = random.randint(0, 2)
     # board[row][col] = player
+
     # if board[position] == ' ':
     #     board[position] = player
     # elif board[position] != ' ':
     #     list.remove(position)
+
+    # for i in board:
+    #     for j in i:
+    #         if j == ' ':
+    #             m.append(j)
+    # x = random.choice(m)
+    # print(x)
 
     # print(board)
     return board
 
 
 def smart_ai(board, player):
-    if board[0][0] == 'x' and board[0][1] == 'x':
+    if player == board[0][0] and player == board[0][1]:
         board[0][2] = '0'
-    print(board)
-    return board
+        print(board)
+        return board
 
 
 def human_vs_ai():
@@ -168,19 +174,17 @@ def human_vs_ai():
     ai_is_moving = False
 
     while not has_won(game_board, the_player):
-        # row = int(input('Row: '))
-        # col = int(input('Col: '))
         if not ai_is_moving:
             position = input('Enter position: ').upper()
             move = get_move(position, game_board)
             game_board = mark(game_board, the_player, move[0], move[1])
         else:
-            # game_board = stupid_ai(game_board, the_player)
-            game_board = smart_ai(game_board, the_player)
+            game_board = stupid_ai(game_board, the_player)
+            # game_board = smart_ai(game_board, the_player)
         print_board(game_board)
         is_full(game_board)
         if has_won(game_board, the_player):
-            print(f'{the_player} WON!')
+            print_result(the_player)
             break
 
         if the_player == 'X':
@@ -193,7 +197,6 @@ def human_vs_ai():
 
 
 def human_vs_random_ai():
-    valid = []
     game_board = init_board()
 
     print_board(game_board)
@@ -208,21 +211,17 @@ def human_vs_random_ai():
     ai_is_moving = False
 
     while not has_won(game_board, the_player):
-        # row = int(input('Row: '))
-        # col = int(input('Col: '))
         if not ai_is_moving:
             position = input('Enter position: ').upper()
             move = get_move(position, game_board)
             game_board = mark(game_board, the_player, move[0], move[1])
-            # game_board = random_ai(game_board, the_player)
-            # time.sleep(2)
         else:
-            game_board = random_ai(game_board, the_player, valid)
-            # time.sleep(2)
+            # game_board = random_ai(game_board, the_player)
+            game_board = smart_ai(game_board, the_player)
         print_board(game_board)
         is_full(game_board)
         if has_won(game_board, the_player):
-            print(f'{the_player} WON!')
+            print_result(the_player)
             break
 
         if the_player == 'X':
@@ -247,15 +246,13 @@ def human_vs_human():
     if the_player == 'QUIT':
         quit()
     while not has_won(game_board, the_player):
-        # row = int(input('Row: '))
-        # col = int(input('Col: '))
         position = input('Enter position: ').upper()
         move = get_move(position, game_board)
         game_board = mark(game_board, the_player, move[0], move[1])
         print_board(game_board)
         is_full(game_board)
         if has_won(game_board, the_player):
-            print(f'{the_player} WON!')
+            print_result(the_player)
             break
 
         if the_player == 'X':
@@ -281,8 +278,6 @@ def ai_vs_ai():
     ai_is_moving = False
 
     while not has_won(game_board, the_player):
-        # row = int(input('Row: '))
-        # col = int(input('Col: '))
         if not ai_is_moving:
             game_board = random_ai(game_board, the_player)
             time.sleep(1)
@@ -292,7 +287,7 @@ def ai_vs_ai():
         print_board(game_board)
         is_full(game_board)
         if has_won(game_board, the_player):
-            print(f'{the_player} WON!')
+            print_result(the_player)
             break
 
         if the_player == 'X':
@@ -314,7 +309,7 @@ def menu():
     print('4.If you want to play vs a smart AI')
     print('5.If you want to lose the game')
     print('6.If you wanna watch the game')
-    user = input('Enter a number: ')
+    user = input('Choose one option: ')
     if user == '1':
         human_vs_human()
     if user == '2':
@@ -326,8 +321,4 @@ def menu():
 
 
 if __name__ == '__main__':
-    # human_vs_human()
-    # human_vs_ai()
-    # human_vs_random_ai
-
     menu()

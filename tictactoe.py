@@ -460,3 +460,22 @@
 
 user = input('Enter letter: ').upper()
 print(user)
+
+# elif board[row][col] != ' ':
+    #     row = random.randint(0, 2)
+    #     col = random.randint(0, 2)
+    # board[row][col] = player
+
+    # if board[position] == ' ':
+    #     board[position] = player
+    # elif board[position] != ' ':
+    #     list.remove(position)
+
+    # for i in board:
+    #     for j in i:
+    #         if j == ' ':
+    #             m.append(j)
+    # x = random.choice(m)
+    # print(x)
+
+    # print(board)
